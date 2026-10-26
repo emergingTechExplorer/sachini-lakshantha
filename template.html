@@ -3,26 +3,26 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap">
 <style>
-/* Layout: matches the printed invitation. Ivory paper with the embossed florals down the
-   left edge, a centred invitation-style header, then one phone-width column of cards.
-   Deliberately a single light "paper" look in every theme, like the card itself. */
+/* Layout: matches the printed card. White paper with watercolour florals in the top-right
+   and bottom-left corners, gold script names, navy spaced capitals in a light sans, a gold
+   serif date, then one phone-width column of cards. Deliberately a single light "paper"
+   look in every theme, like the card itself. */
 :root {
   color-scheme: light;
-  --paper: #E6E3DC;
-  --card: #F3F1EC;
-  --ink: #252522;
-  --muted: #67625A;
-  --rule: #D3CCBE;
-  --gold: #9A7629;
-  --gold-text: #7A5C1E;
-  --gold-soft: #EAE1CB;
-  --emboss: #EDEBE6;
+  --paper: #FDFDF9;
+  --card: #FFFFFF;
+  --ink: #1C2038;
+  --muted: #5D6175;
+  --rule: #E4E2DA;
+  --gold: #AD7D22;
+  --gold-text: #8A6316;
+  --gold-soft: #F6EFDF;
   --font-script: "Great Vibes", "Snell Roundhand", "Apple Chancery", cursive;
-  --font-caps: "Cormorant Garamond", "Cormorant", Garamond, Georgia, serif;
-  --font-body: "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
-  --radius: 4px;
+  --font-serif: "Cormorant Garamond", Garamond, Georgia, serif;
+  --font-sans: "Montserrat", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --radius: 3px;
 }
 
 * { box-sizing: border-box; }
@@ -34,54 +34,61 @@ body {
   position: relative;
   overflow-x: hidden;
   color: var(--ink);
-  font: 400 1.0625rem/1.5 var(--font-body);
-  background-color: var(--paper);
-  /* faint paper grain */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .27 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background: var(--paper);
+  font: 400 1rem/1.55 var(--font-sans);
 }
 button, input { font: inherit; color: inherit; }
 
-/* Embossed florals from the invitation */
+/* Watercolour florals from the card */
 .floral {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: clamp(104px, 27vw, 236px);
-  aspect-ratio: 236 / 1197;
-  max-width: 100%;
-  background: url("__FLORAL__") top left / 100% auto no-repeat;
-  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent), linear-gradient(to right, #000 82%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to bottom, #000 72%, transparent), linear-gradient(to right, #000 82%, transparent);
-  mask-composite: intersect;
   pointer-events: none;
+  mix-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+.floral-top {
+  top: 0;
+  right: 0;
+  width: clamp(170px, 50vw, 400px);
+  aspect-ratio: 520 / 517;
+  background-image: url("__FLORAL_TOP__");
+  background-position: top right;
+}
+.floral-bottom {
+  bottom: 0;
+  left: 0;
+  width: clamp(160px, 46vw, 360px);
+  aspect-ratio: 466 / 598;
+  background-image: url("__FLORAL_BOTTOM__");
+  background-position: bottom left;
 }
 
 .page {
   position: relative;
   max-width: 31rem;
   margin: 0 auto;
-  padding-block: 1.5rem 2.75rem;
+  padding-block: 1.5rem clamp(13rem, 62vw, 21rem); /* room for the bottom florals */
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
   display: grid;
   gap: 1.5rem;
 }
 .caps {
-  font-family: var(--font-caps);
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   font-variant-numeric: lining-nums;
 }
 
 /* Demo note */
 .demo {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--muted);
   border: 1px dashed var(--rule);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--card) 80%, transparent);
+  background: rgba(255, 255, 255, 0.85);
   padding: 0.625rem 0.875rem;
   display: flex;
   flex-wrap: wrap;
@@ -95,49 +102,38 @@ button, input { font: inherit; color: inherit; }
   border-radius: 999px;
   padding: 0.0625rem 0.625rem;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
 }
 .chip:hover { border-color: var(--gold); }
 
-/* Invitation header */
+/* Card header */
 .hero {
   text-align: center;
   display: grid;
   justify-items: center;
-  gap: 0.5rem;
-  padding-block: 1.25rem 0.25rem;
-}
-.monogram {
-  display: flex;
-  align-items: center;
   gap: 0.625rem;
-  font: 400 3.25rem/1 var(--font-caps);
-  color: var(--emboss);
-  text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.85), 1px 1px 1px rgba(60, 50, 30, 0.28);
-}
-.monogram i {
-  width: 1px;
-  height: 3.75rem;
-  background: var(--emboss);
-  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.8), 1px 0 1px rgba(60, 50, 30, 0.25);
+  padding-block: clamp(3rem, 16vw, 5rem) 0.25rem;
 }
 .names {
-  margin: 0.25rem 0 0;
+  margin: 0;
   display: grid;
   justify-items: center;
-  font: 400 clamp(2.75rem, 13vw, 3.75rem)/1 var(--font-script);
+  font: 400 clamp(3rem, 14vw, 4rem)/1 var(--font-script);
   color: var(--gold);
 }
-.names .amp { font-size: 0.72em; line-height: 1.05; }
+.names .amp {
+  font: 300 clamp(1.5rem, 6vw, 1.875rem)/1.4 var(--font-sans);
+  color: var(--ink);
+}
 .date {
   margin: 0.5rem 0 0;
-  font: 500 1.75rem/1 var(--font-caps);
-  letter-spacing: 0.2em;
+  font: 600 2rem/1 var(--font-serif);
+  letter-spacing: 0.12em;
+  padding-left: 0.12em; /* balances the trailing letter-spacing */
   color: var(--gold);
   font-variant-numeric: lining-nums;
-  padding-left: 0.2em; /* balances the trailing letter-spacing */
 }
-.venue { margin: 0; font-size: 0.8125rem; color: var(--ink); text-wrap: balance; max-width: 22rem; }
+.venue { margin: 0; font-size: 0.75rem; line-height: 1.8; text-wrap: balance; max-width: 20rem; }
 
 /* Cards */
 .card {
@@ -148,27 +144,27 @@ button, input { font: inherit; color: inherit; }
   display: grid;
   gap: 1rem;
   min-width: 0;
-  box-shadow: 0 1px 2px rgba(60, 50, 30, 0.06);
+  box-shadow: 0 2px 10px rgba(28, 32, 56, 0.05);
 }
-.card-head { display: grid; gap: 0.25rem; text-align: center; }
-.card-head h2 { margin: 0; font-size: 1.0625rem; color: var(--ink); }
-.hint { margin: 0; color: var(--muted); font-style: italic; }
+.card-head { display: grid; gap: 0.375rem; text-align: center; }
+.card-head h2 { margin: 0; font-size: 0.9375rem; font-weight: 500; }
+.hint { margin: 0; color: var(--muted); font-size: 0.875rem; font-weight: 300; }
 
 .field { position: relative; display: flex; align-items: center; }
-.field svg { position: absolute; left: 0.875rem; width: 19px; height: 19px; color: var(--muted); pointer-events: none; }
+.field svg { position: absolute; left: 0.875rem; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
 #q {
   width: 100%;
   min-width: 0;
-  font-size: 1.1875rem;
-  padding: 0.8125rem 3rem 0.8125rem 2.75rem;
+  font-size: 1.0625rem;
+  padding: 0.8125rem 3rem 0.8125rem 2.625rem;
   border: 1px solid var(--rule);
   border-radius: var(--radius);
-  background: #FBFAF7;
+  background: var(--paper);
   outline: none;
   -webkit-appearance: none;
   appearance: none;
 }
-#q::placeholder { color: #9A948A; font-style: italic; }
+#q::placeholder { color: #9C9FAE; font-weight: 300; }
 #q::-webkit-search-cancel-button { display: none; }
 #q:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
 #clear {
@@ -196,42 +192,42 @@ button, input { font: inherit; color: inherit; }
 }
 .result:hover, .result:focus-visible { background: var(--gold-soft); outline: none; }
 .result .who { min-width: 0; display: grid; }
-.result .name { font-size: 1.1875rem; overflow-wrap: anywhere; }
-.result .house { font-size: 0.875rem; color: var(--muted); font-style: italic; overflow-wrap: anywhere; }
+.result .name { font-size: 1.0625rem; overflow-wrap: anywhere; }
+.result .house { font-size: 0.8125rem; color: var(--muted); font-weight: 300; overflow-wrap: anywhere; }
 .pill {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   color: var(--gold-text);
   border: 1px solid var(--gold);
   border-radius: 999px;
-  padding: 0.1875rem 0.625rem 0.125rem;
+  padding: 0.25rem 0.625rem;
   white-space: nowrap;
   font-variant-numeric: lining-nums tabular-nums;
 }
-.empty { margin: 0; color: var(--muted); text-align: center; }
+.empty { margin: 0; color: var(--muted); text-align: center; font-size: 0.9375rem; }
 
-/* Seat view: echoes "will be honored by the presence of ______" */
+/* Seat view: echoes "will be honored by the presence of ......" */
 .seat { text-align: center; justify-items: center; gap: 1.25rem; }
-.presence { margin: 0; font-size: 0.8125rem; line-height: 1.7; max-width: 17rem; }
+.presence { margin: 0; font-size: 0.75rem; line-height: 1.8; max-width: 18rem; }
 .guest {
   margin: -0.5rem 0 0;
   width: 100%;
   padding-bottom: 0.25rem;
-  border-bottom: 1px dashed var(--ink);
+  border-bottom: 2px dotted var(--ink);
   font: 400 clamp(2rem, 10vw, 2.625rem)/1.25 var(--font-script);
   color: var(--ink);
   overflow-wrap: anywhere;
 }
-.tableno { display: grid; justify-items: center; gap: 0.125rem; }
-.tableno .caps { font-size: 0.8125rem; }
+.tableno { display: grid; justify-items: center; gap: 0.25rem; }
+.tableno .caps { font-size: 0.75rem; }
 .tableno .num {
-  font: 500 5rem/1 var(--font-caps);
+  font: 600 5rem/1 var(--font-serif);
   color: var(--gold);
   font-variant-numeric: lining-nums;
 }
 .tableno .tname { font: 400 2rem/1.1 var(--font-script); color: var(--gold); }
 
 .mates-wrap { width: 100%; display: grid; gap: 0.5rem; }
-.mates-head { margin: 0; font-size: 0.8125rem; }
+.mates-head { margin: 0; font-size: 0.75rem; font-weight: 500; }
 .mates {
   list-style: none; margin: 0; padding: 0;
   display: grid;
@@ -239,25 +235,27 @@ button, input { font: inherit; color: inherit; }
   gap: 0 1rem;
   text-align: left;
 }
-.mates li { padding-block: 0.4375rem; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; }
+.mates li { padding-block: 0.4375rem; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; font-size: 0.9375rem; }
 
 .btn {
   border: 1px solid var(--gold);
   background: transparent;
   color: var(--gold-text);
   border-radius: 999px;
-  padding: 0.6875rem 1.5rem 0.625rem;
-  font-size: 0.8125rem;
+  padding: 0.6875rem 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
   cursor: pointer;
 }
 .btn:hover { background: var(--gold-soft); }
 
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
-.foot { text-align: center; font-size: 0.9375rem; font-style: italic; color: var(--muted); margin: 0; }
+.foot { text-align: center; font-size: 0.875rem; font-weight: 300; color: var(--muted); margin: 0; }
 </style>
 <!-- body -->
-<div class="floral" id="floral" aria-hidden="true"></div>
+<div class="floral floral-top" aria-hidden="true"></div>
+<div class="floral floral-bottom" aria-hidden="true"></div>
 <div class="page">
   <div class="demo" id="demo" hidden>
     <strong>Demo with sample guests.</strong> Try
@@ -268,7 +266,6 @@ button, input { font: inherit; color: inherit; }
   </div>
 
   <header class="hero">
-    <div class="monogram" id="monogram" aria-hidden="true"></div>
     <h1 class="names" id="names"></h1>
     <p class="date" id="evDate"></p>
     <p class="venue caps" id="evVenue"></p>
@@ -417,15 +414,17 @@ const line = (text, cls) => { const s = document.createElement("span"); s.textCo
 names.append(line(first));
 if (rest.length) names.append(line("&", "amp"), line(rest.join(" & ")));
 names.setAttribute("aria-label", EVENT.couple || "");
-const mono = String(EVENT.monogram || "").split("|");
-if (mono.length === 2) $("monogram").append(line(mono[0]), document.createElement("i"), line(mono[1]));
-else $("monogram").hidden = true;
 $("evDate").textContent = EVENT.date || "";
-$("evVenue").textContent = EVENT.venue || "";
+// Break the venue after its first part, as on the card ("The Victorian, / The Kingsbury, Colombo")
+const [venueFirst, ...venueRest] = String(EVENT.venue || "").split(", ");
+$("evVenue").append(venueRest.length ? venueFirst + "," : venueFirst);
+if (venueRest.length) $("evVenue").append(document.createElement("br"), venueRest.join(", "));
 $("help").textContent = EVENT.help || "";
 $("presence").textContent = `${EVENT.couple || "We"} will be honored by the presence of`;
 $("demo").hidden = !EVENT.demo;
-if (!getComputedStyle($("floral")).backgroundImage.includes("data:")) $("floral").hidden = true;
+document.querySelectorAll(".floral").forEach((f) => {
+  if (!getComputedStyle(f).backgroundImage.includes("data:")) f.hidden = true;
+});
 
 $("q").addEventListener("input", renderResults);
 $("q").addEventListener("keydown", (e) => {

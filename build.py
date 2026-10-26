@@ -29,7 +29,10 @@ HERE = Path(__file__).resolve().parent
 TEMPLATE = HERE / "template.html"
 GUESTS = HERE / "guests.csv"
 EVENT = HERE / "event.json"
-FLORAL = HERE / "floral.jpg"  # embossed flowers cropped from the invitation
+FLORALS = {  # watercolour corners cropped from the wedding card
+    "__FLORAL_TOP__": HERE / "floral-top.jpg",
+    "__FLORAL_BOTTOM__": HERE / "floral-bottom.jpg",
+}
 SHEET_ID_FILE = HERE / ".sheet-id"  # not committed, so the Sheet link stays out of the public repo
 OUT = HERE / "build"
 
@@ -117,15 +120,14 @@ def main():
     dupes = [n for n, c in Counter(g["name"].lower() for g in guests).items() if c > 1]
     counts = Counter(g["table"] for g in guests)
 
-    floral = ""
-    if FLORAL.exists():
-        floral = "data:image/jpeg;base64," + base64.b64encode(FLORAL.read_bytes()).decode()
-
-    template = TEMPLATE.read_text(encoding="utf-8")
-    page = (template
+    page = (TEMPLATE.read_text(encoding="utf-8")
             .replace("/*GUESTS*/[]", to_js(guests))
-            .replace("/*EVENT*/{}", to_js(event))
-            .replace("__FLORAL__", floral))
+            .replace("/*EVENT*/{}", to_js(event)))
+    for marker, image in FLORALS.items():
+        uri = ""
+        if image.exists():
+            uri = "data:image/jpeg;base64," + base64.b64encode(image.read_bytes()).decode()
+        page = page.replace(marker, uri)
 
     head, body = page.split(BODY_MARKER)
     OUT.mkdir(exist_ok=True)

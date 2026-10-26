@@ -1,9 +1,8 @@
 {
   "demo": true,
   "couple": "Sachini & Lakshantha",
-  "monogram": "L|S",
   "date": "16.11.2026",
-  "venue": "The Victorian Hall, The Kingsbury, Colombo",
+  "venue": "The Victorian, The Kingsbury, Colombo",
   "help": "Can't find your name? Please ask at the welcome desk.",
   "tables": [
     {"id": "1", "name": ""},
