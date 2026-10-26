@@ -1,2 +1,9 @@
-preview.html
+# Guest data and the Sheet link stay on this Mac only
+guests.csv
+.sheet-id
+# Built output: GitHub builds and publishes the page itself
+build/
+# Printed sign files
+sign/
 .DS_Store
+__pycache__/
