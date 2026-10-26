@@ -6,13 +6,13 @@
   "venue": "The Victorian Hall, The Kingsbury, Colombo",
   "help": "Can't find your name? Please ask at the welcome desk.",
   "tables": [
-    {"id": "1", "name": "Jasmine", "x": 48, "y": 100},
-    {"id": "2", "name": "Lotus", "x": 108, "y": 100},
-    {"id": "3", "name": "Araliya", "x": 252, "y": 100},
-    {"id": "4", "name": "Orchid", "x": 312, "y": 100},
-    {"id": "5", "name": "Hibiscus", "x": 48, "y": 180},
-    {"id": "6", "name": "Magnolia", "x": 108, "y": 180},
-    {"id": "7", "name": "Lily", "x": 252, "y": 180},
-    {"id": "8", "name": "Rose", "x": 312, "y": 180}
+    {"id": "1", "name": "", "x": 48, "y": 100},
+    {"id": "2", "name": "", "x": 108, "y": 100},
+    {"id": "3", "name": "", "x": 252, "y": 100},
+    {"id": "4", "name": "", "x": 312, "y": 100},
+    {"id": "5", "name": "", "x": 48, "y": 180},
+    {"id": "6", "name": "", "x": 108, "y": 180},
+    {"id": "7", "name": "", "x": 252, "y": 180},
+    {"id": "8", "name": "", "x": 312, "y": 180}
   ]
 }

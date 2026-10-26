@@ -436,6 +436,7 @@ function showSeat(g) {
   $("seatName").textContent = g.name;
   $("seatNum").textContent = g.table;
   $("seatTname").textContent = t && t.name ? t.name : "";
+  $("seatTname").hidden = !(t && t.name);
   renderMap(g.table);
 
   const mates = GUESTS.filter((x) => x.table === g.table && x !== g)

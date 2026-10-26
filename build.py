@@ -141,7 +141,7 @@ def main():
     for t in event["tables"]:
         n = counts.get(str(t["id"]), 0)
         flag = "" if TABLE_MIN <= n <= TABLE_MAX else "   <- check size"
-        print(f"  Table {t['id']:>2} {t['name']:<12} {n:>2} guests{flag}")
+        print(f"  Table {t['id']:>2} {t.get('name', ''):<12} {n:>2} guests{flag}")
     for n in dupes:
         print(f"  Note: more than one guest named '{n}'. The page shows both with their tables.")
 
