@@ -339,7 +339,8 @@ function search(raw) {
     .map((g) => ({ g, rank: starts(g._name) ? 0 : 1 }))
     .sort((a, b) => a.rank - b.rank || a.g.name.localeCompare(b.g.name))
     .map((x) => x.g);
-  if (hits.length || !fuse) return hits.slice(0, 8);
+  // Show every direct match: some families share a surname across 20+ rows.
+  if (hits.length || !fuse) return hits.slice(0, 40);
   // Nothing typed matches directly: fall back to close spellings only.
   const fuzzy = fuse.search(q, { limit: 8 });
   const cutoff = fuzzy.length ? fuzzy[0].score + 0.12 : 0;
@@ -383,7 +384,7 @@ function showSeat(g) {
 
   const mates = GUESTS.filter((x) => x.table === g.table && x !== g)
     .sort((a, b) => a.name.localeCompare(b.name));
-  $("matesHead").textContent = `Sharing your table · ${mates.length + 1} guests`;
+  $("matesHead").textContent = "Sharing your table";
   $("mates").replaceChildren(...mates.map((m) => {
     const li = document.createElement("li");
     li.textContent = m.name;

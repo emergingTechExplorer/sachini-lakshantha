@@ -37,7 +37,6 @@ SHEET_ID_FILE = HERE / ".sheet-id"  # not committed, so the Sheet link stays out
 OUT = HERE / "build"
 
 BODY_MARKER = "<!-- body -->"
-TABLE_MIN, TABLE_MAX = 8, 12  # warn outside this range; tables can be flexible
 
 NOT_SHARED = ("Can't read the guest list Sheet. In Google Sheets, click Share and set "
               "General access to 'Anyone with the link' (Viewer).")
@@ -81,6 +80,10 @@ def load_guests(text):
         if not table:
             problems.append(f"row {line}: {name} has no table")
             continue
+        if not table.isdigit():
+            problems.append(f"row {line}: {name}'s table '{table}' isn't a whole number")
+            continue
+        table = str(int(table))  # "09" and "9" are the same table
         guests.append({"name": name, "table": table, "household": get("household")})
     return guests, problems
 
@@ -105,11 +108,6 @@ def main():
 
     if not guests:
         sys.exit(f"No guests found in {source}, so the page was not rebuilt.")
-
-    table_ids = {str(t["id"]) for t in event["tables"]}
-    for g in guests:
-        if g["table"] not in table_ids:
-            problems.append(f"{g['name']} is at table {g['table']}, which is not in event.json")
 
     if problems:
         print(f"Fix these in {source}, then run again:")
@@ -140,10 +138,9 @@ def main():
     )
 
     print(f"Built {len(guests)} guests from {source} across {len(counts)} tables -> build/index.html")
-    for t in event["tables"]:
-        n = counts.get(str(t["id"]), 0)
-        flag = "" if TABLE_MIN <= n <= TABLE_MAX else "   <- check size"
-        print(f"  Table {t['id']:>2} {t.get('name', ''):<12} {n:>2} guests{flag}")
+    # Rows can be couples or families ("Mr & Mrs ..."), so these are rows, not people.
+    for table in sorted(counts, key=int):
+        print(f"  Table {table:>2}  {counts[table]:>2} rows")
     for n in dupes:
         print(f"  Note: more than one guest named '{n}'. The page shows both with their tables.")
 
